@@ -1,5 +1,5 @@
 #include <cctype>
-#include "detect_sys.h"
+#include "sys.h"
 
 /* DEFINE */
 #ifdef _WIN32

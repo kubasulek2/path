@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include <cstring>
-#include "parse_args.h"
-#include "detect_sys.h"
+#include "args.h"
+#include "sys.h"
 
 #define FLAGS_LEN 2
 

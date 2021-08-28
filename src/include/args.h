@@ -1,4 +1,6 @@
 #include <string>
+#ifndef __args_h
+#define __args_h
 struct parsed_args
 {
   std::string path;
@@ -14,3 +16,5 @@ struct parsed_args
  * @returns parsed_args
 */
 parsed_args ParseArgs(int argc, char const *argv[]);
+
+#endif
