@@ -2,6 +2,7 @@
 #include <string>
 #include <cstring>
 #include "parse_args.h"
+#include "detect_sys.h"
 
 #define FLAGS_LEN 2
 
@@ -29,7 +30,7 @@ void InitFlags(flag (&f)[FLAGS_LEN])
   f[1].id = 2;
 }
 
-flag *FindFlag(const char *arg, flag (&f)[FLAGS_LEN])
+flag *FindFlag(const char *arg, flag *f)
 {
   for (size_t i = 0; i < FLAGS_LEN; i++)
     if (strcmp(f[i].name, arg) == 0)
@@ -44,23 +45,19 @@ parsed_args ParseArgs(int argc, char const *argv[])
 
   /* Initialization */
   InitFlags(flags);
+  
   a.rel = "";
+  // Path must be last argument
+  a.path = argv[argc - 1];
+  // Default system, may be overritten later
+  a.sys = DetectSys();
 
   // Valid args number from 2 to 6.
   if (argc < 2 || argc > 6)
     ErrMsgAndExit();
 
-  // Path must be last argument
-  a.path = argv[argc - 1];
 
-  // One arg only no flag specified, rest is default.
-  if (argc == 2)
-  {
-    a.sys = 2;
-    return a;
-  }
-
-  // Find flag
+  // Find flags
   for (size_t i = 1; i < argc - 1; i++)
   {
     flag *r = FindFlag(argv[i], flags);
@@ -68,6 +65,7 @@ parsed_args ParseArgs(int argc, char const *argv[])
     if (r == NULL)
       ErrMsgAndExit();
 
+    // Dereference pointer, for easier operations
     flag f = *r;
 
     // flag has_val: next arg is the value
@@ -79,7 +77,6 @@ parsed_args ParseArgs(int argc, char const *argv[])
     char val[strlen(argv[i])];
     strcpy(val, argv[i]);
 
- 
     switch (f.id)
     {
       /* sys flag */

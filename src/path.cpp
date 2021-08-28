@@ -1,7 +1,8 @@
 #include <iostream>
+#include <filesystem>
 #include <string>
-#include "separator.h"
 #include "parse_args.h"
+#include "parse_path.h"
 
 
 
@@ -9,11 +10,8 @@ int main(int argc, char const *argv[])
 {
   
   parsed_args x = ParseArgs(argc, argv);
-  char sep = DetectSeparator(x.sys);
-  std::cout << x.path << std::endl;
-  std::cout << x.sys << std::endl;
-  std::cout << x.rel << std::endl;
-  std::cout << sep << std::endl;
-
+  std::string path = std::filesystem::current_path();
+  path = ReplaceSeperator(path, x.sys);
+  std::cout << path << std::endl;
   return 0;
 }
