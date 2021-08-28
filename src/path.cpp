@@ -13,5 +13,5 @@ int main(int argc, char const *argv[])
   std::string path = std::filesystem::current_path();
   path = ReplaceSeperator(path, x.sys);
   std::cout << path << std::endl;
-  return 0;
+  
 }
